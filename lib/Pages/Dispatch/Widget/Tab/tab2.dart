@@ -53,67 +53,66 @@ class _Tab2State extends State<Tab2> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () {
-        if (dispatchController.isLoading.value) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (dispatchController.filteredDispatchedProducts.isEmpty) {
-          return const Center(
-              child: CustomText(
-            text: 'No dispatched products found.',
-            weight: FontWeight.bold,
-            size: 30,
-          ));
-        } else {
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(15)),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.grey.withOpacity(0.1),
-                        offset: const Offset(0, 2),
-                        blurRadius: 2)
-                  ]),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.grey.withOpacity(0.1),
+                  offset: const Offset(0, 2),
+                  blurRadius: 2)
+            ]),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                              height: 50,
-                              width: 600,
-                              child: CustomSearchField(
-                                  controller: customerSearchController)),
-                          Row(
-                            children: [
-                              IconTextButton(
-                                onPressed:
-                                    dispatchController.customerdownloadPDF,
-                                icon: Icons.picture_as_pdf,
-                                tooltip: 'Download PDF',
-                                label: 'PDF',
-                              ),
-                              IconTextButton(
-                                onPressed:
-                                    dispatchController.customerdownloadExcel,
-                                icon: Icons.download,
-                                tooltip: 'Download Excel',
-                                label: 'Excel',
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                    SizedBox(
+                        height: 50,
+                        width: 600,
+                        child: CustomSearchField(
+                            controller: customerSearchController)),
+                    Row(
+                      children: [
+                        IconTextButton(
+                          onPressed: dispatchController.customerdownloadPDF,
+                          icon: Icons.picture_as_pdf,
+                          tooltip: 'Download PDF',
+                          label: 'PDF',
+                        ),
+                        IconTextButton(
+                          onPressed: dispatchController.customerdownloadExcel,
+                          icon: Icons.download,
+                          tooltip: 'Download Excel',
+                          label: 'Excel',
+                        ),
+                      ],
                     ),
-                    Expanded(
+                  ],
+                ),
+              ),
+              Obx(
+                () {
+                  if (dispatchController.isLoading.value) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (dispatchController
+                      .filteredDispatchedProducts.isEmpty) {
+                    return const Center(
+                        child: CustomText(
+                      text: 'No dispatched products found.',
+                      weight: FontWeight.bold,
+                      size: 30,
+                    ));
+                  } else {
+                    return Expanded(
                       child: ListView.builder(
                         itemCount: dispatchController
                             .filteredDispatchedProducts.length,
@@ -260,14 +259,14 @@ class _Tab2State extends State<Tab2> {
                           );
                         },
                       ),
-                    ),
-                  ],
-                ),
+                    );
+                  }
+                },
               ),
-            ),
-          );
-        }
-      },
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

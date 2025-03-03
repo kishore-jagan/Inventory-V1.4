@@ -50,6 +50,7 @@ class AddBoxController extends GetxController {
       var response = await http.post(
         Uri.parse("${ApiConfig.baseUrl}${ApiConfig.saveBox}"),
         body: jsonEncode(requestBody),
+        headers: {"Content-Type": "application/json"},
       );
 
       // Decode the response
@@ -66,8 +67,8 @@ class AddBoxController extends GetxController {
         return "bad";
       }
     } catch (e) {
-      Toaster()
-          .showsToast('Error: Something went wrong', Colors.red, Colors.white);
+      Toaster().showsToast(
+          'Error: Something went wrong $e', Colors.red, Colors.white);
       print('$e');
       return "bad";
     }

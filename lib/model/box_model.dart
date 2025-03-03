@@ -10,7 +10,7 @@ class BoxModel {
   final String recieverName;
   final String location;
   final String mos;
-  final String status;
+  final String? status;
   final String token;
   final List<Produc> products;
 

@@ -201,6 +201,11 @@ class _ProductsTableState extends State<ProductsTable> {
                 ),
                 Row(
                   children: [
+                    IconButton(
+                      onPressed: _productsController.fetchListProducts,
+                      icon: const Icon(Icons.refresh),
+                      tooltip: 'Refresh',
+                    ),
                     IconTextButton(
                       onPressed: _productsController.downloadPDF,
                       icon: Icons.download,

@@ -395,23 +395,23 @@ class DispatchController extends GetxController {
         CellIndex.indexByString('I1'),
       ];
 
-      sheetObject.updateCell(headerCells[0], const TextCellValue('S.No'),
+      sheetObject.updateCell(headerCells[0], TextCellValue('S.No'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(headerCells[1], const TextCellValue('Name'),
+      sheetObject.updateCell(headerCells[1], TextCellValue('Name'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(headerCells[2], const TextCellValue('Model No'),
+      sheetObject.updateCell(headerCells[2], TextCellValue('Model No'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(headerCells[3], const TextCellValue('Serial No'),
+      sheetObject.updateCell(headerCells[3], TextCellValue('Serial No'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(headerCells[4], const TextCellValue('Category'),
+      sheetObject.updateCell(headerCells[4], TextCellValue('Category'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(headerCells[5], const TextCellValue('Date'),
+      sheetObject.updateCell(headerCells[5], TextCellValue('Date'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(headerCells[6], const TextCellValue('Qty'),
+      sheetObject.updateCell(headerCells[6], TextCellValue('Qty'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(headerCells[7], const TextCellValue('Amount'),
+      sheetObject.updateCell(headerCells[7], TextCellValue('Amount'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(headerCells[8], const TextCellValue('Total Amt'),
+      sheetObject.updateCell(headerCells[8], TextCellValue('Total Amt'),
           cellStyle: headerStyle);
 
       int totalQty = 0;
@@ -444,12 +444,12 @@ class DispatchController extends GetxController {
         totalTotalAmount += totalPrice;
       }
       List<CellValue> totalsRow = [
-        const TextCellValue(''),
-        const TextCellValue(''),
-        const TextCellValue(''),
-        const TextCellValue(''),
-        const TextCellValue(''),
-        const TextCellValue('Total'),
+        TextCellValue(''),
+        TextCellValue(''),
+        TextCellValue(''),
+        TextCellValue(''),
+        TextCellValue(''),
+        TextCellValue('Total'),
         IntCellValue(totalQty),
         DoubleCellValue(totalAmount),
         DoubleCellValue(totalTotalAmount),
@@ -637,28 +637,25 @@ class DispatchController extends GetxController {
         CellIndex.indexByString('J1'),
       ];
 
-      sheetObject.updateCell(headerCells[0], const TextCellValue('S.No'),
+      sheetObject.updateCell(headerCells[0], TextCellValue('S.No'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(
-          headerCells[1], const TextCellValue('Customer Name'),
+      sheetObject.updateCell(headerCells[1], TextCellValue('Customer Name'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(headerCells[2], const TextCellValue('Date'),
+      sheetObject.updateCell(headerCells[2], TextCellValue('Date'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(
-          headerCells[3], const TextCellValue('Product Name'),
+      sheetObject.updateCell(headerCells[3], TextCellValue('Product Name'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(headerCells[4], const TextCellValue('Serial No'),
+      sheetObject.updateCell(headerCells[4], TextCellValue('Serial No'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(headerCells[5], const TextCellValue('Model No'),
+      sheetObject.updateCell(headerCells[5], TextCellValue('Model No'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(headerCells[6], const TextCellValue('Category'),
+      sheetObject.updateCell(headerCells[6], TextCellValue('Category'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(headerCells[7], const TextCellValue('Quantity'),
+      sheetObject.updateCell(headerCells[7], TextCellValue('Quantity'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(headerCells[8], const TextCellValue('Amount'),
+      sheetObject.updateCell(headerCells[8], TextCellValue('Amount'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(
-          headerCells[9], const TextCellValue('Total Amount'),
+      sheetObject.updateCell(headerCells[9], TextCellValue('Total Amount'),
           cellStyle: headerStyle);
 
       // int totalQty = 0;

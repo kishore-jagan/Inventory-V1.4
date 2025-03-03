@@ -8,6 +8,7 @@ import 'package:inventory/Widgets/dropdown.dart';
 import 'package:inventory/Widgets/elevated_button.dart';
 import 'package:inventory/api_services/addinventory_service.dart';
 import 'package:inventory/api_services/boxController.dart';
+import 'package:inventory/api_services/chart_service.dart';
 
 import '../../Constants/controllers.dart';
 import '../../Constants/toaster.dart';
@@ -50,6 +51,7 @@ class _InventoryPageState extends State<InventoryPage> {
   // final GlobalKey<VendorSearch2State> vendorSearchKey2 =
   //     GlobalKey<VendorSearch2State>();
   final BoxController _box = Get.put(BoxController());
+  final ChartController chartController = Get.put(ChartController());
 
   @override
   void initState() {
@@ -583,20 +585,23 @@ class _InventoryPageState extends State<InventoryPage> {
                                       // String status =
                                       String stat =
                                           await inventoryController.saveData();
-                                      print(stat);
+                                      print("after inventory saved: $stat");
                                       if (stat == 'ok') {
-                                        productsController.fetchListProducts();
+                                        // productsController.fetchListProducts();
                                         // Get.back(result: "true");
                                         _box.boxes.clear();
                                         bool status = await UpdateBox()
-                                            .boxUpdate(widget.name, widget.qty,
-                                                widget.token);
+                                                .boxUpdate(widget.name,
+                                                    widget.qty, widget.token) ??
+                                            false;
                                         if (status) {
                                           print("status : === $status");
                                           Get.snackbar("Success",
                                               "Details updated Successfully");
                                           productsController
                                               .fetchListProducts();
+                                          productsController
+                                              .fetchCategoryChart();
                                           inventoryController.clearFields();
                                           _box.fetchBoxes();
                                           Get.back();
@@ -605,13 +610,7 @@ class _InventoryPageState extends State<InventoryPage> {
                                         }
                                       }
 
-                                      // if (status == 'ok') {
-                                      //   setState(() {
-                                      //     Get.back();
-                                      //   });
-                                      // } else {}
-
-                                      print("End");
+                                      print(" last End");
                                     } else {
                                       inventoryController.isLoading.value =
                                           false;

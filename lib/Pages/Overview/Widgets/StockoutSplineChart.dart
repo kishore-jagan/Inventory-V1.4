@@ -26,6 +26,16 @@ class StockoutSplineChart extends StatelessWidget {
         final List<SalesData> lastMonthData = chartController.data
             .where((sales) => sales.date.isAfter(oneMonthAgo))
             .toList();
+
+        if (lastMonthData.isEmpty) {
+          return const Center(
+              child: Text('No data available for the last 30 days.'));
+        }
+
+        final double maxQty =
+            lastMonthData.map((e) => e.qty).reduce((a, b) => a > b ? a : b);
+        final double interval =
+            maxQty / 5; // Adjust interval based on your data
         // print("Total data points: ${chartController.data.length}");
         // print("Data points in the last 30 days: ${lastMonthData.length}");
         // lastMonthData.forEach((data) {
@@ -98,15 +108,19 @@ class StockoutSplineChart extends StatelessWidget {
                             fontSize: 14,
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.w500)),
-                    primaryYAxis: const NumericAxis(
+                    primaryYAxis: NumericAxis(
                       // numberFormat: NumberFormat.compactCurrency(symbol: ''),
-                      axisLine: AxisLine(width: 0),
-                      plotOffset: 5,
-                      majorGridLines: MajorGridLines(width: 0),
-                      majorTickLines: MajorTickLines(width: 0),
+                      minimum: 0, // Start value of the Y-axis
+                      maximum:
+                          maxQty + (interval / 2), // End value of the Y-axis
+                      interval: interval, // Interval between ticks
+                      axisLine: const AxisLine(width: 0),
+                      // plotOffset: 5,
+                      majorGridLines: const MajorGridLines(width: 0),
+                      majorTickLines: const MajorTickLines(width: 0),
                       borderColor: Colors.transparent,
                       borderWidth: 0,
-                      labelStyle: TextStyle(
+                      labelStyle: const TextStyle(
                           color: secondaryColor,
                           fontFamily: "Roboto",
                           fontSize: 14,

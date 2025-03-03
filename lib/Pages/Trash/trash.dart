@@ -64,9 +64,15 @@ class _TrashPageState extends State<TrashPage> {
         ),
         Expanded(child: Obx(() {
           if (_trash.trash.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+                child: CustomText(
+              text: 'No Trash records found.',
+              weight: FontWeight.bold,
+              size: 30,
+            ));
           }
           return Container(
+            width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: active.withOpacity(.4), width: .5),
@@ -77,76 +83,79 @@ class _TrashPageState extends State<TrashPage> {
                       offset: const Offset(0, 2),
                       blurRadius: 2)
                 ]),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: DataTable(
-                  columns: col,
-                  columnSpacing: ResponsiveWidget.isLargeScreen(context)
-                      ? MediaQuery.of(context).size.width / 50
-                      : ResponsiveWidget.isCustomScreen(context)
-                          ? MediaQuery.of(context).size.width / 120
-                          : ResponsiveWidget.isMediumScreen(context)
-                              ? MediaQuery.of(context).size.width / 120
-                              : MediaQuery.of(context).size.width / 120,
-                  horizontalMargin:
-                      ResponsiveWidget.isLargeScreen(context) ? 30 : 10,
-                  // showCheckboxColumn: false,
-                  // headingRowColor: MaterialStateColor.resolveWith(
-                  //     (states) => Colors.blue.shade200),
-                  rows: List<DataRow>.generate(
-                      _trash.trash.length,
-                      (index) => DataRow(cells: [
-                            _buildDataCell((index + 1).toString()),
-                            _buildDataCell(_trash.trash[index].name),
-                            _buildDataCell(_trash.trash[index].modelNo),
-                            _buildDataCell(_trash.trash[index].serialNo),
-                            _buildDataCell(_trash.trash[index].vendorName),
-                            _buildDataCell(_trash.trash[index].category),
-                            _buildDataCell(_trash.trash[index].date),
-                            _buildDataCell(_trash.trash[index].qty,
-                                centerText: true),
-                            _buildDataCell(_trash.trash[index].price),
-                            _buildDataCell(_trash.trash[index].totalPrice),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DataTable(
+                    columns: col,
+                    columnSpacing: ResponsiveWidget.isLargeScreen(context)
+                        ? MediaQuery.of(context).size.width / 50
+                        : ResponsiveWidget.isCustomScreen(context)
+                            ? MediaQuery.of(context).size.width / 120
+                            : ResponsiveWidget.isMediumScreen(context)
+                                ? MediaQuery.of(context).size.width / 120
+                                : MediaQuery.of(context).size.width / 120,
+                    horizontalMargin:
+                        ResponsiveWidget.isLargeScreen(context) ? 30 : 10,
+                    // showCheckboxColumn: false,
+                    // headingRowColor: MaterialStateColor.resolveWith(
+                    //     (states) => Colors.blue.shade200),
+                    rows: List<DataRow>.generate(
+                        _trash.trash.length,
+                        (index) => DataRow(cells: [
+                              _buildDataCell((index + 1).toString()),
+                              _buildDataCell(_trash.trash[index].name),
+                              _buildDataCell(_trash.trash[index].modelNo),
+                              _buildDataCell(_trash.trash[index].serialNo),
+                              _buildDataCell(_trash.trash[index].vendorName),
+                              _buildDataCell(_trash.trash[index].category),
+                              _buildDataCell(_trash.trash[index].date),
+                              _buildDataCell(_trash.trash[index].qty,
+                                  centerText: true),
+                              _buildDataCell(_trash.trash[index].price),
+                              _buildDataCell(_trash.trash[index].totalPrice),
 
-                            // DataCell(Text(_trash.trash[index].id)),
-                            // DataCell(Text(_trash.trash[index].name)),
-                            // DataCell(Text(_trash.trash[index].modelNo)),
-                            // DataCell(Text(_trash.trash[index].serialNo)),
-                            // DataCell(Text(_trash.trash[index].vendorName)),
-                            // DataCell(Text(_trash.trash[index].category)),
-                            // DataCell(Text(_trash.trash[index].date)),
-                            // DataCell(Text(_trash.trash[index].qty)),
-                            // DataCell(Text(_trash.trash[index].price)),
-                            // DataCell(Text(_trash.trash[index].totalPrice)),
-                            DataCell(InkWell(
-                              onTap: () async {
-                                bool status = await _undo(
-                                    _trash.trash[index].id,
-                                    _trash.trash[index].mainCategory);
-                                if (status) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text(
-                                              "Product Undo Successfully")));
-                                }
-                              },
-                              child: Container(
-                                height: 30,
-                                width: 60,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color:
-                                            Colors.lightBlue.withOpacity(0.5)),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(15))),
-                                child: const Center(
-                                  child: Text(
-                                    "Undo",
+                              // DataCell(Text(_trash.trash[index].id)),
+                              // DataCell(Text(_trash.trash[index].name)),
+                              // DataCell(Text(_trash.trash[index].modelNo)),
+                              // DataCell(Text(_trash.trash[index].serialNo)),
+                              // DataCell(Text(_trash.trash[index].vendorName)),
+                              // DataCell(Text(_trash.trash[index].category)),
+                              // DataCell(Text(_trash.trash[index].date)),
+                              // DataCell(Text(_trash.trash[index].qty)),
+                              // DataCell(Text(_trash.trash[index].price)),
+                              // DataCell(Text(_trash.trash[index].totalPrice)),
+                              DataCell(InkWell(
+                                onTap: () async {
+                                  bool status = await _undo(
+                                      _trash.trash[index].id,
+                                      _trash.trash[index].mainCategory);
+                                  if (status) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text(
+                                                "Product Undo Successfully")));
+                                  }
+                                },
+                                child: Container(
+                                  height: 30,
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Colors.lightBlue
+                                              .withOpacity(0.5)),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(15))),
+                                  child: const Center(
+                                    child: Text(
+                                      "Undo",
+                                    ),
                                   ),
                                 ),
-                              ),
-                            )),
-                          ]))),
+                              )),
+                            ]))),
+              ),
             ),
           );
         }))

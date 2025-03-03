@@ -165,20 +165,22 @@ class ProductsController extends GetxController {
   }
 
   void filterData() {
-    filteredDataList.clear();
+    // Start with the complete data list
+    print('Original Data Length: ${dataListProduct.length}');
+    filteredDataList = List.from(dataListProduct);
 
-    // Filter based on selected category
-
+    // Filter based on selected main category
     if (selectedMainCategory.isNotEmpty && selectedMainCategory != 'All') {
-      filteredDataList.addAll(dataListProduct.where(
-          (product) => product['main_category'] == selectedMainCategory));
-    } else {
-      filteredDataList.addAll(dataListProduct);
+      filteredDataList.retainWhere(
+          (product) => product['main_category'] == selectedMainCategory);
+      print('After Main Category Filter: ${filteredDataList.length}');
     }
 
+    // Filter based on selected category
     if (selectedCategory.isNotEmpty && selectedCategory != 'All') {
       filteredDataList
-          .retainWhere((category) => category['category'] == selectedCategory);
+          .retainWhere((product) => product['category'] == selectedCategory);
+      print('After Category Filter: ${filteredDataList.length}');
     }
 
     // Filter based on selected type
@@ -187,6 +189,7 @@ class ProductsController extends GetxController {
           .retainWhere((product) => product['type'] == selectedType);
     }
 
+    // Filter based on selected location
     if (selectedLocation.isNotEmpty && selectedLocation != 'All') {
       filteredDataList
           .retainWhere((product) => product['location'] == selectedLocation);
@@ -448,26 +451,25 @@ class ProductsController extends GetxController {
       ];
 
       // Header row
-      sheetObject.updateCell(headerCells[0], const TextCellValue('S.No'),
+      sheetObject.updateCell(headerCells[0], TextCellValue('S.No'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(headerCells[1], const TextCellValue('Name'),
+      sheetObject.updateCell(headerCells[1], TextCellValue('Name'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(headerCells[2], const TextCellValue('Model No'),
+      sheetObject.updateCell(headerCells[2], TextCellValue('Model No'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(headerCells[3], const TextCellValue('Serial No'),
+      sheetObject.updateCell(headerCells[3], TextCellValue('Serial No'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(headerCells[4], const TextCellValue('Vendor Name'),
+      sheetObject.updateCell(headerCells[4], TextCellValue('Vendor Name'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(headerCells[5], const TextCellValue('Category'),
+      sheetObject.updateCell(headerCells[5], TextCellValue('Category'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(headerCells[6], const TextCellValue('Date'),
+      sheetObject.updateCell(headerCells[6], TextCellValue('Date'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(headerCells[7], const TextCellValue('Quantity'),
+      sheetObject.updateCell(headerCells[7], TextCellValue('Quantity'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(headerCells[8], const TextCellValue('Amount'),
+      sheetObject.updateCell(headerCells[8], TextCellValue('Amount'),
           cellStyle: headerStyle);
-      sheetObject.updateCell(
-          headerCells[9], const TextCellValue('Total Amount'),
+      sheetObject.updateCell(headerCells[9], TextCellValue('Total Amount'),
           cellStyle: headerStyle);
 
       int totalQty = 0;
@@ -504,13 +506,13 @@ class ProductsController extends GetxController {
 
       // Totals row
       List<CellValue> totalsRow = [
-        const TextCellValue(''),
-        const TextCellValue(''),
-        const TextCellValue(''),
-        const TextCellValue(''),
-        const TextCellValue(''),
-        const TextCellValue(''),
-        const TextCellValue('Total'),
+        TextCellValue(''),
+        TextCellValue(''),
+        TextCellValue(''),
+        TextCellValue(''),
+        TextCellValue(''),
+        TextCellValue(''),
+        TextCellValue('Total'),
         IntCellValue(totalQty),
         DoubleCellValue(totalAmount),
         DoubleCellValue(totalTotalAmount),

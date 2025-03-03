@@ -60,8 +60,8 @@ class _OverviewCardsSmallScreenState extends State<OverviewCardsSmallScreen> {
               title: "GeoEngineering",
               value: stockCountController.geoengineeringCount.toString(),
               onTap: () {
-                menuController.changeActiveItemTo(barcodePageDisplayName);
-                navigationController.navigateTo(barcodePageroute);
+                menuController.changeActiveItemTo(productsPageDisplayName);
+                navigationController.navigateTo(productsPageRoute);
               },
             ),
             SizedBox(
@@ -71,8 +71,8 @@ class _OverviewCardsSmallScreenState extends State<OverviewCardsSmallScreen> {
               title: "ESS",
               value: stockCountController.essCount.toString(),
               onTap: () {
-                menuController.changeActiveItemTo(userPageDisplayName);
-                navigationController.navigateTo(userPageRoute);
+                menuController.changeActiveItemTo(productsPageDisplayName);
+                navigationController.navigateTo(productsPageRoute);
               },
             ),
           ],
