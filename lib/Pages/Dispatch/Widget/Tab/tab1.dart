@@ -35,91 +35,95 @@ class _Tab1State extends State<Tab1> {
 
   void _filterStockOutList() {
     final query = stockSearchController.text.toLowerCase();
-    if (query.isNotEmpty) {
-      dispatchController.filteredStockOutList
-          .assignAll(stockOutList.stockOutList.where((record) {
-        return record.name.toLowerCase().contains(query) ||
-            record.serialNo.toLowerCase().contains(query) ||
-            record.modelNo.toLowerCase().contains(query) ||
-            record.category.toLowerCase().contains(query);
-      }).toList());
-    } else {
-      dispatchController.filteredStockOutList
-          .assignAll(stockOutList.stockOutList);
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (query.isNotEmpty) {
+        dispatchController.filteredStockOutList.assignAll(
+          stockOutList.stockOutList.where((record) {
+            return record.name.toLowerCase().contains(query) ||
+                record.serialNo.toLowerCase().contains(query) ||
+                record.modelNo.toLowerCase().contains(query) ||
+                record.category.toLowerCase().contains(query);
+          }).toList(),
+        );
+      } else {
+        dispatchController.filteredStockOutList
+            .assignAll(stockOutList.stockOutList);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      if (stockOutList.isLoading.value) {
-        return const Center(child: CircularProgressIndicator());
-      } else if (dispatchController.filteredStockOutList.isEmpty) {
-        return const Center(
-            child: CustomText(
-          text: 'No stock out records found.',
-          weight: FontWeight.bold,
-          size: 30,
-        ));
-      } else {
-        return Padding(
-          padding: const EdgeInsets.all(16),
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: const BorderRadius.all(Radius.circular(15)),
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.grey.withOpacity(0.1),
-                      offset: const Offset(0, 2),
-                      blurRadius: 2)
-                ]),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.grey.withOpacity(0.1),
+                  offset: const Offset(0, 2),
+                  blurRadius: 2)
+            ]),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                        height: 50,
+                        width: 600,
+                        child: CustomSearchField(
+                            controller: stockSearchController)),
+                    Row(
                       children: [
-                        SizedBox(
-                            height: 50,
-                            width: 600,
-                            child: CustomSearchField(
-                                controller: stockSearchController)),
-                        Row(
-                          children: [
-                            IconTextButton(
-                              onPressed: dispatchController.stockdownloadPDF,
-                              icon: Icons.picture_as_pdf,
-                              tooltip: 'Download PDF',
-                              label: 'PDF',
-                            ),
-                            IconTextButton(
-                              onPressed: dispatchController.stockdownloadExcel,
-                              icon: Icons.download,
-                              tooltip: 'Download Excel',
-                              label: 'Excel',
-                            ),
-                          ],
+                        IconTextButton(
+                          onPressed: dispatchController.stockdownloadPDF,
+                          icon: Icons.picture_as_pdf,
+                          tooltip: 'Download PDF',
+                          label: 'PDF',
+                        ),
+                        IconTextButton(
+                          onPressed: dispatchController.stockdownloadExcel,
+                          icon: Icons.download,
+                          tooltip: 'Download Excel',
+                          label: 'Excel',
                         ),
                       ],
                     ),
-                  ),
-                  const Divider(),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16),
-                    child: CustomText(
-                      text: "StockOut List",
-                      color: lightGray,
-                      weight: FontWeight.bold,
-                      size: 20,
-                    ),
-                  ),
-                  Expanded(
+                  ],
+                ),
+              ),
+              const Divider(),
+              Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: CustomText(
+                  text: "StockOut List",
+                  color: lightGray,
+                  weight: FontWeight.bold,
+                  size: 20,
+                ),
+              ),
+              Obx(() {
+                if (stockOutList.isLoading.value) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (dispatchController.filteredStockOutList.isEmpty) {
+                  return const Center(
+                      child: CustomText(
+                    text: 'No stock out records found.',
+                    weight: FontWeight.bold,
+                    size: 30,
+                  ));
+                } else {
+                  return Expanded(
                     child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
                       child: DataTable(
                         columnSpacing: ResponsiveWidget.isLargeScreen(context)
                             ? MediaQuery.of(context).size.width / 22
@@ -222,13 +226,13 @@ class _Tab1State extends State<Tab1> {
                         ),
                       ),
                     ),
-                  )
-                ],
-              ),
-            ),
+                  );
+                }
+              }),
+            ],
           ),
-        );
-      }
-    });
+        ),
+      ),
+    );
   }
 }

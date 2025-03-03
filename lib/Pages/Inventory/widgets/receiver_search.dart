@@ -5,11 +5,11 @@ import 'package:get/get.dart';
 import 'package:inventory/api_services/receiver_service.dart';
 
 class ReceiverSearch extends StatefulWidget {
-  TextEditingController controller;
+  final TextEditingController controller;
   @override
   final GlobalKey<ReceiverSearchState> key;
 
-  ReceiverSearch({required this.controller, required this.key})
+  const ReceiverSearch({required this.controller, required this.key})
       : super(key: key);
 
   @override
@@ -19,16 +19,26 @@ class ReceiverSearch extends StatefulWidget {
 class ReceiverSearchState extends State<ReceiverSearch> {
   final ReceiverController receiverController = Get.put(ReceiverController());
 
-  Future<void> setSelectedReceiver() async {
-    setState(() {
-      receiverController.selectedReceiver.value = widget.controller.text;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
     receiverController.fetchReceivers();
+
+    // Add listener to detect changes in the external controller
+    widget.controller.addListener(() {
+      if (mounted) {
+        setState(() {
+          receiverController.selectedReceiver.value = widget.controller.text;
+        }); // Trigger rebuild when controller value changes
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    // Remove listener when the widget is disposed
+    widget.controller.removeListener(() {});
+    super.dispose();
   }
 
   @override
@@ -43,15 +53,16 @@ class ReceiverSearchState extends State<ReceiverSearch> {
       },
       onSelected: (String selectedReceiverName) {
         setState(() {
-          receiverController.selectedReceiver.value = selectedReceiverName;
-          // print('selectedVendor: ${selectedVendor}');
-          // print('selectedVendorName: ${selectedVendorName}');
+          widget.controller.text = selectedReceiverName;
         });
       },
       fieldViewBuilder: (BuildContext context,
           TextEditingController textEditingController,
           FocusNode focusNode,
           VoidCallback? onFieldSubmitted) {
+        // Sync external controller with Autocomplete field
+        textEditingController.value = widget.controller.value;
+
         return Container(
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(20)),
@@ -61,16 +72,7 @@ class ReceiverSearchState extends State<ReceiverSearch> {
             controller: textEditingController,
             focusNode: focusNode,
             onChanged: (value) {
-              setState(() {
-                widget.controller.text = textEditingController.text;
-                // print('Typed 1: ${widget.controller.text}');
-                // print('typed 2: ${textEditingController.text}');
-              });
-            },
-            onFieldSubmitted: (value) {
-              setState(() {
-                widget.controller.text = textEditingController.text;
-              });
+              widget.controller.text = value;
             },
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.symmetric(horizontal: 10),
@@ -109,7 +111,7 @@ class ReceiverSearchState extends State<ReceiverSearch> {
                           setState(() {
                             onSelected(option);
                             widget.controller.text = option;
-                            // print('final last: ${widget.controller.text}');
+                            print('final last: ${widget.controller.text}');
                           });
                         },
                         child: ListTile(

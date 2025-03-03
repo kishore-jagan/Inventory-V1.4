@@ -29,6 +29,15 @@ class StockoutColumnChart extends StatelessWidget {
             .where((sales) => sales.date.isAfter(oneMonthAgo))
             .toList();
 
+        if (lastMonthData.isEmpty) {
+          return const Center(
+              child: Text('No data available for the last 30 days.'));
+        }
+
+        final double maxQty =
+            lastMonthData.map((e) => e.qty).reduce((a, b) => a > b ? a : b);
+        final double interval = maxQty / 5;
+
         // Print statements to verify filtered data
         // print("Total data points: ${chartController.data.length}");
         // print("Data points in the last 30 days: ${lastMonthData.length}");
@@ -105,9 +114,12 @@ class StockoutColumnChart extends StatelessWidget {
                   dateFormat:
                       DateFormat('MMM d'), // Use the same date format here
                 ),
-                primaryYAxis: const NumericAxis(
+                primaryYAxis: NumericAxis(
+                  minimum: 0, // Start value of the Y-axis
+                  maximum: maxQty + (interval / 2), // End value of the Y-axis
+                  interval: interval,
                   axisLine: AxisLine(width: 0),
-                  plotOffset: 5,
+                  // plotOffset: 5,
                   majorGridLines: MajorGridLines(width: 0),
                   majorTickLines: MajorTickLines(width: 0),
                   borderColor: Colors.transparent,

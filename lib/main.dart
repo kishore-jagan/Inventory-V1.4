@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inventory/404/error_page.dart';
@@ -13,6 +14,7 @@ import 'api_services/auth_service_controller.dart';
 import 'layout.dart';
 
 void main(List<String> args) async {
+  // debugPaintPointersEnabled = true;
   WidgetsFlutterBinding.ensureInitialized();
   Get.put(menu_controller.MenuController());
   Get.put(NavigationController());

@@ -18,16 +18,25 @@ class VendorSearch extends StatefulWidget {
 class VendorSearchState extends State<VendorSearch> {
   final VendorController vendorController = Get.put(VendorController());
 
-  Future<void> setSelectedVendor() async {
-    setState(() {
-      vendorController.selectedVendor.value = widget.controller.text;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
     vendorController.fetchVendors();
+
+    widget.controller.addListener(() {
+      if (mounted) {
+        setState(() {
+          vendorController.selectedVendor.value = widget.controller.text;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    widget.controller.removeListener(() {});
+    super.dispose();
   }
 
   @override
@@ -42,7 +51,7 @@ class VendorSearchState extends State<VendorSearch> {
       },
       onSelected: (String selectedVendorName) {
         setState(() {
-          vendorController.selectedVendor.value = selectedVendorName;
+          widget.controller.text = selectedVendorName;
           // print('selectedVendor: ${selectedVendor}');
           print('selectedVendorName: $selectedVendorName');
         });
@@ -51,6 +60,7 @@ class VendorSearchState extends State<VendorSearch> {
           TextEditingController textEditingController,
           FocusNode focusNode,
           VoidCallback? onFieldSubmitted) {
+        textEditingController.value = widget.controller.value;
         return Container(
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(20)),
@@ -60,16 +70,7 @@ class VendorSearchState extends State<VendorSearch> {
             controller: textEditingController,
             focusNode: focusNode,
             onChanged: (value) {
-              setState(() {
-                widget.controller.text = textEditingController.text;
-                print('Typed 1: ${widget.controller.text}');
-                print('typed 2: ${textEditingController.text}');
-              });
-            },
-            onFieldSubmitted: (value) {
-              setState(() {
-                widget.controller.text = textEditingController.text;
-              });
+              widget.controller.text = value;
             },
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.symmetric(horizontal: 10),

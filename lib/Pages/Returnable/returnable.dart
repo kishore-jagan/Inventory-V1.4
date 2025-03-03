@@ -46,60 +46,84 @@ class ReturnableItemsPage extends StatelessWidget {
                         offset: const Offset(0, 2),
                         blurRadius: 2)
                   ]),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DataTable(
-                  columns: const [
-                    DataColumn(
-                        label: Text("ID", style: TextStyle(fontSize: 20))),
-                    DataColumn(
-                        label: Text('Name', style: TextStyle(fontSize: 20))),
-                    DataColumn(
-                        label:
-                            Text('Project No', style: TextStyle(fontSize: 20))),
-                    DataColumn(
-                        label:
-                            Text('Model No', style: TextStyle(fontSize: 20))),
-                    DataColumn(
-                        label:
-                            Text('Serial No', style: TextStyle(fontSize: 20))),
-                    DataColumn(
-                        label: Text('Date', style: TextStyle(fontSize: 20))),
-                    DataColumn(
-                        label:
-                            Text('Quantity', style: TextStyle(fontSize: 20))),
-                    DataColumn(
-                        label: Text('Amt', style: TextStyle(fontSize: 20))),
-                    DataColumn(
-                        label:
-                            Text('Total Amt', style: TextStyle(fontSize: 20))),
-                    DataColumn(
-                        label:
-                            Text('Returnable', style: TextStyle(fontSize: 20))),
-                    // DataColumn(label: Text('ID')),
-                    // DataColumn(label: Text('Name')),
-                    // DataColumn(label: Text('Quantity')),
-                    // DataColumn(label: Text('Returnable')),
-                  ],
-                  rows: List.generate(controller.returnable.length, (index) {
-                    final item = controller.returnable[index];
-                    return DataRow(
-                      cells: [
-                        _buildDataCell((index + 1).toString()),
-                        _buildDataCell(item['name']),
-                        _buildDataCell(item['project_no']),
-                        _buildDataCell(item['model_no']),
-                        _buildDataCell(item['serial_no']),
-                        _buildDataCell(item['date']),
-                        _buildDataCell(item['qty'], centerText: true),
-                        _buildDataCell(item['price']),
-                        _buildDataCell(item['total_price']),
-                        _buildDataCell(item['returnable']),
-                      ],
-                    );
-                  }).toList(),
-                ),
-              ),
+              child: controller.returnable.isEmpty
+                  ? const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Center(
+                        child: Text(
+                          "No returnable data available",
+                          style: TextStyle(fontSize: 18, color: Colors.grey),
+                        ),
+                      ),
+                    )
+                  : SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: DataTable(
+                        columns: const [
+                          DataColumn(
+                              label:
+                                  Text("ID", style: TextStyle(fontSize: 20))),
+                          DataColumn(
+                              label:
+                                  Text('Name', style: TextStyle(fontSize: 20))),
+                          DataColumn(
+                              label: Text('Project No',
+                                  style: TextStyle(fontSize: 20))),
+                          DataColumn(
+                              label: Text('Model No',
+                                  style: TextStyle(fontSize: 20))),
+                          DataColumn(
+                              label: Text('Serial No',
+                                  style: TextStyle(fontSize: 20))),
+                          DataColumn(
+                              label:
+                                  Text('Date', style: TextStyle(fontSize: 20))),
+                          DataColumn(
+                              label: Text('Quantity',
+                                  style: TextStyle(fontSize: 20))),
+                          DataColumn(
+                              label:
+                                  Text('Amt', style: TextStyle(fontSize: 20))),
+                          DataColumn(
+                              label: Text('Total Amt',
+                                  style: TextStyle(fontSize: 20))),
+                          DataColumn(
+                              label: Text('Returnable',
+                                  style: TextStyle(fontSize: 20))),
+                          // DataColumn(label: Text('ID')),
+                          // DataColumn(label: Text('Name')),
+                          // DataColumn(label: Text('Quantity')),
+                          // DataColumn(label: Text('Returnable')),
+                        ],
+                        columnSpacing: ResponsiveWidget.isLargeScreen(context)
+                            ? MediaQuery.of(context).size.width / 35
+                            : ResponsiveWidget.isCustomScreen(context)
+                                ? MediaQuery.of(context).size.width / 50
+                                : ResponsiveWidget.isMediumScreen(context)
+                                    ? MediaQuery.of(context).size.width / 80
+                                    : MediaQuery.of(context).size.width / 80,
+                        horizontalMargin:
+                            ResponsiveWidget.isLargeScreen(context) ? 30 : 10,
+                        rows: List.generate(controller.returnable.length,
+                            (index) {
+                          final item = controller.returnable[index];
+                          return DataRow(
+                            cells: [
+                              _buildDataCell((index + 1).toString()),
+                              _buildDataCell(item['name']),
+                              _buildDataCell(item['project_no']),
+                              _buildDataCell(item['model_no']),
+                              _buildDataCell(item['serial_no']),
+                              _buildDataCell(item['date']),
+                              _buildDataCell(item['qty'], centerText: true),
+                              _buildDataCell(item['price']),
+                              _buildDataCell(item['total_price']),
+                              _buildDataCell(item['returnable']),
+                            ],
+                          );
+                        }).toList(),
+                      ),
+                    ),
             ),
           ],
         ),

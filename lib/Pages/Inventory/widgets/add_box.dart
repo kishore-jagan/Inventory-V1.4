@@ -11,6 +11,7 @@ import '../../../Helpers/responsiveness.dart';
 import '../../../Widgets/custom_text.dart';
 import '../../../Widgets/dropdown.dart';
 import '../../../api_services/addbox_service.dart';
+import '../../../api_services/boxController.dart';
 import 'vendor_search.dart';
 
 class BoxAddPage extends StatefulWidget {
@@ -27,6 +28,7 @@ class _BoxAddPageState extends State<BoxAddPage> {
       GlobalKey<ReceiverSearchState>();
 
   final AddBoxController addBoxController = Get.put(AddBoxController());
+  final BoxController _box = Get.put(BoxController());
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -379,6 +381,7 @@ class _BoxAddPageState extends State<BoxAddPage> {
                                     addBoxController.locationController.clear();
                                     addBoxController.selectedMos;
                                     addBoxController.list.clear();
+                                    _box.fetchBoxes();
                                   });
                                 }
                               } else {

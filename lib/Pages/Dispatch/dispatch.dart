@@ -13,6 +13,7 @@ import '../../../api_services/products_service_controller.dart';
 import '../../Constants/toaster.dart';
 import '../../Widgets/custom_text_field.dart';
 import '../../Widgets/dropdown.dart';
+import '../../api_services/chart_service.dart';
 import '../../helpers/responsiveness.dart';
 import '../Inventory/widgets/receiver_search.dart';
 import 'Widget/dispatchList_products.dart';
@@ -27,8 +28,8 @@ class DispatchPage extends StatefulWidget {
 
 class _DispatchPageState extends State<DispatchPage> {
   final ProductsController productsController = Get.put(ProductsController());
-
   final DispatchController dispatchController = Get.put(DispatchController());
+  final ChartController chartController = Get.put(ChartController());
 
   final GlobalKey<VendorSearchState> customerSearchKey =
       GlobalKey<VendorSearchState>();
@@ -155,22 +156,6 @@ class _DispatchPageState extends State<DispatchPage> {
                                 )),
                                 const SizedBox(width: 50),
                                 Flexible(
-                                    child: CustomDropDown(
-                                        items: dispatchController.mosList,
-                                        val: dispatchController.selectedMos,
-                                        onChanged: (newValue) {
-                                          setState(() {
-                                            dispatchController.selectedMos =
-                                                newValue!;
-                                          });
-                                        },
-                                        fieldTitle: 'Mode of Shipment')),
-                              ],
-                            ),
-                            const SizedBox(height: 10.0),
-                            Row(
-                              children: [
-                                Flexible(
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -191,6 +176,22 @@ class _DispatchPageState extends State<DispatchPage> {
                                     ],
                                   ),
                                 ),
+                              ],
+                            ),
+                            const SizedBox(height: 10.0),
+                            Row(
+                              children: [
+                                Flexible(
+                                    child: CustomDropDown(
+                                        items: dispatchController.mosList,
+                                        val: dispatchController.selectedMos,
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            dispatchController.selectedMos =
+                                                newValue!;
+                                          });
+                                        },
+                                        fieldTitle: 'Mode of Shipment')),
                                 const SizedBox(width: 50),
                                 Flexible(
                                   child: CustomTextField(
@@ -201,7 +202,7 @@ class _DispatchPageState extends State<DispatchPage> {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 40),
                             Button(
                                 onPressed: () async {
                                   dispatchController.isLoading.value = true;
@@ -234,6 +235,9 @@ class _DispatchPageState extends State<DispatchPage> {
                                           .clear();
                                       dispatchController.selectedProducts
                                           .clear();
+                                      productsController.fetchCategoryChart();
+                                      chartController.fetchCategoryChart();
+                                      chartController.fetchChartData();
                                     }
                                   } else {
                                     dispatchController.isLoading.value = false;

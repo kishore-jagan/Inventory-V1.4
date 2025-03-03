@@ -68,8 +68,8 @@ class _OverviewCardsMediumScreenState extends State<OverviewCardsMediumScreen> {
                   value: stockCountController.geoengineeringCount.toString(),
                   textColor: Colors.redAccent,
                   onTap: () {
-                    menuController.changeActiveItemTo(barcodePageDisplayName);
-                    navigationController.navigateTo(barcodePageroute);
+                    menuController.changeActiveItemTo(productsPageDisplayName);
+                    navigationController.navigateTo(productsPageRoute);
                   },
                   topcolor: Colors.redAccent),
               SizedBox(
@@ -80,8 +80,8 @@ class _OverviewCardsMediumScreenState extends State<OverviewCardsMediumScreen> {
                 value: stockCountController.essCount.toString(),
                 textColor: active,
                 onTap: () {
-                  menuController.changeActiveItemTo(userPageDisplayName);
-                  navigationController.navigateTo(userPageRoute);
+                  menuController.changeActiveItemTo(productsPageDisplayName);
+                  navigationController.navigateTo(productsPageRoute);
                 },
               ),
             ],

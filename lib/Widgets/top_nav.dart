@@ -96,11 +96,11 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
                   // const SizedBox(
                   //   width: 26,
                   // ),
-                  Image.asset(
-                    'assets/image/Tridel-logo.png',
-                    height: 56,
-                    fit: BoxFit.cover,
-                  ),
+                  // Image.asset(
+                  //   'assets/image/Tridel-logo.png',
+                  //   height: 56,
+                  //   fit: BoxFit.cover,
+                  // ),
                 ],
               ),
             )

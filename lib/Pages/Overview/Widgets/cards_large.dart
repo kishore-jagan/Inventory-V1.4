@@ -73,8 +73,8 @@ class _OverviewCardsLargeScreenState extends State<OverviewCardsLargeScreen> {
             value: stockCountController.essCount.toString(),
             textColor: active,
             onTap: () {
-              menuController.changeActiveItemTo(userPageDisplayName);
-              navigationController.navigateTo(userPageRoute);
+              menuController.changeActiveItemTo(productsPageDisplayName);
+              navigationController.navigateTo(productsPageRoute);
             },
           ),
         ],

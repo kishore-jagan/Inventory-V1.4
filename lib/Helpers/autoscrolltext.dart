@@ -56,7 +56,7 @@ class _InformationWarningState extends State<InformationWarning> {
       height: 200, // Adjust height as needed
       child: Obx(() {
         if (boxController.boxes.isEmpty) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: Text('aaaaaaaaaa'));
         }
 
         // Extract product names
