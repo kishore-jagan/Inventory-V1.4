@@ -63,10 +63,10 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                       padding: const EdgeInsets.only(right: 12),
                       child: SizedBox(
                         height: 70,
-                        // child: Image.asset(
-                        //   'assets/image/Tridel-logo.png',
-                        //   fit: BoxFit.cover,
-                        // ),
+                        child: Image.asset(
+                          'assets/image/Tridel-logo.png',
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                     Expanded(child: Container())

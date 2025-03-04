@@ -1,6 +1,6 @@
 class ApiConfig {
   // static const String baseUrl = 'https://a0075db6886b87.lhr.life';
-  static const String baseUrl = 'http://localhost:8080';
+  static const String baseUrl = 'http://192.168.0.102:8080';
   static const String auth = '/Inventory_Api/auth.php';
   static const String stockCount = '/Inventory_Api/total_productcount.php';
   static const String vendorCount = '/Inventory_Api/vendor_count.php';
